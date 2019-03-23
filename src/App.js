@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import ProductItem from './productItem'
+import AddProduct from './addProduct'
 
 const products = [
   {
@@ -24,6 +25,8 @@ class App extends Component {
       .parse(localStorage.getItem('products'))
       
       };
+
+    this.onAdd = this.onAdd.bind(this)
     this.onDelete = this.onDelete.bind(this)
   }
   componentWillMount (){
@@ -36,8 +39,15 @@ class App extends Component {
   return this.state.products
   
   }
-  onAdd() {
-    
+  onAdd(name, price) {
+    const products = this.getProducts();
+
+    products.push({
+      name,
+      price
+    })
+
+      this.setState({ products })
   }
 
   onDelete(name) {
@@ -51,6 +61,10 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Products Manager</h1>
+        < AddProduct
+          onAdd={ this.onAdd}
+
+         />
         {
           this.state.products.map(product => {
             return (
