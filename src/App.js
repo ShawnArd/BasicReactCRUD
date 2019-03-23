@@ -1,34 +1,68 @@
 import React, { Component } from 'react';
 import './App.css';
-import MyComponent from './MyComponent'
+import ProductItem from './productItem'
+
+const products = [
+  {
+    name: 'iPad',
+    price: 200
+  },
+  {
+    name: 'iPhone',
+    price: 600
+  }
+];
+
+localStorage.setItem('products', JSON.stringify(products))
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      title: 'Initial title',
-      name: 'Initial name'
-    }
-    this.onClick = this.onClick.bind(this);
+      products: JSON
+      .parse(localStorage.getItem('products'))
+      
+      };
+    this.onDelete = this.onDelete.bind(this)
+  }
+  componentWillMount (){
+  const products = this.getProducts();
+
+  this.setState({products});
   }
 
-  onClick() {
-    this.setState({
-      title: 'New App Title',
-      name:'New app name'
+  getProducts () {
+  return this.state.products
+  
+  }
+  onAdd() {
+    
+  }
+
+  onDelete(name) {
+    const products = this.getProducts();
+    const filteredProducts = products.filter(product => {
+      return product.name !== name;
     });
+    this.setState({products: filteredProducts});
   }
   render() {
     return (
       <div className="App">
-        <h1>{this.state.title}</h1>
-        <div onClick={this.onClick}> Click here!</div>
-        <MyComponent
-        title={this.state.title}
-        name={this.state.name}
-        onClick={this.onClick}
-        />
+        <h1>Products Manager</h1>
+        {
+          this.state.products.map(product => {
+            return (
+              <ProductItem
+              key={ product.name}
+              {...product} 
+              onDelete={this.onDelete}
+              />
+            );
+          })
+        }
+
       </div>
     );
   }
