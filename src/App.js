@@ -76,11 +76,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Products Manager</h1>
+        <h1>Reactive Product Manager</h1>
         < AddProduct
           onAdd={ this.onAdd}
 
          />
+         <h3>Product List</h3>
         {
           this.state.products.map(product => {
             return (

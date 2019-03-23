@@ -21,8 +21,10 @@ class AddProduct extends Component {
             <h3> Add Product </h3>
             <input placeholder ="Name" ref={nameInput => this
             .nameInput = nameInput} />
+             {` | `} 
             <input placeholder ="Price" ref={priceInput => this
             .priceInput = priceInput} />
+            {` | `} 
             <button>Add</button>
 
             <hr />
